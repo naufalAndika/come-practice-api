@@ -13,4 +13,18 @@ router.post('/users', async (req, res) => {
     }
 })
 
+router.get('/users', async (req, res) => {
+    try {
+        await User.find({}).populate('User company').exec(function (err, users) {
+            if (err) {
+                res.status(500).send(e.message)
+            }
+
+            res.status(200).send(users)
+        })
+    } catch (e) {
+        res.status(500).send(e.message)
+    }
+})
+
 module.exports = router
